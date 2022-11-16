@@ -1,0 +1,25 @@
+{
+  "name": "bubble-chart",
+  "version": "0.0.1",
+  "repository": "https://github.com/mgrabovsky/bubble-chart",
+  "license": "BlueOak-1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "d3": "^7.6.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.0",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@vitejs/plugin-react": "^2.2.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  }
+}
