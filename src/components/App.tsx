@@ -7,10 +7,9 @@ import { Continent, Dataset, fetchDataset } from '../dataset';
 import { ContinentSelector } from './ContinentSelector';
 import { YearSelector } from './YearSelector';
 
-const chartWidth = 600;
-const chartHeight = 400;
-const chartMargins = { top: 20, right: 40, bottom: 45, left: 50 };
-const defaultYear = 2000;
+const CHART_SIZE = { height: 400, width: 600 };
+const CHART_MARGINS = { top: 20, right: 40, bottom: 45, left: 50 };
+const DEFAULT_YEAR = 2000;
 
 interface FilterCriteria {
   continent?: Continent;
@@ -39,7 +38,7 @@ export function App() {
   const [dataset, setDataset] = useState<Dataset>();
   const isLoading = !dataset;
   const [continent, setContinent] = useState<Continent>();
-  const [year, setYear] = useState(defaultYear);
+  const [year, setYear] = useState(DEFAULT_YEAR);
   // The time series start at 1950 for most countries.
   const yearRange = [1950, 2018] as const;
 
@@ -87,9 +86,9 @@ export function App() {
           />
           <BubbleChart
             data={filteredData}
-            height={chartHeight}
-            margin={chartMargins}
-            width={chartWidth}
+            height={CHART_SIZE.height}
+            margin={CHART_MARGINS}
+            width={CHART_SIZE.width}
             // Domains were picked to contain all data comfortably.
             sizeDomain={[100_000, 1.5e9]}
             xDomain={[200, 200_000]}
