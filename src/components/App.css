@@ -1,0 +1,25 @@
+#root {
+  width: 90%;
+  max-width: 60em;
+  min-width: 40em;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.axes {
+  /* color: grey; */
+}
+
+.axes .label {
+  fill: currentColor;
+  font-size: .85rem;
+  text-anchor: end;
+}
+
+.axes .tick {
+  font-size: .7rem;
+}
+
+.bg {
+  fill: #f9f1da;
+}
