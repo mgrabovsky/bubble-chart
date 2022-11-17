@@ -8,10 +8,20 @@ interface BubbleSpec {
   country: string;
   cx: number;
   cy: number;
-  fill: string;
+  fill?: string;
   r: number;
   title: string;
 }
+
+const expectancyFormat = d3.format('.1f');
+const gdpFormat = d3.format('$,d');
+const populationFormat = d3.format(',d');
+
+const makeLabel = (d: DatasetRow) =>
+  `${d.country} in ${d.year}
+GDP per capita: ${gdpFormat(d.gdp)}
+Population: ${populationFormat(d.population)}
+Life expectancy: ${expectancyFormat(d.expectancy)} years`;
 
 export interface BubbleChartProps {
   data: DatasetRow[];
@@ -51,14 +61,12 @@ export function BubbleChart(props: BubbleChartProps) {
     return data.map((d) => {
       const cx = xScale(d.gdp);
       const cy = yScale(d.expectancy);
-      const fill = '#278b8ca0';
       const r = radiusScale(d.population);
-      const title = `${d.country}`;
+      const title = makeLabel(d);
       return {
         country: d.code,
         cx,
         cy,
-        fill,
         r,
         title,
       };
@@ -95,9 +103,9 @@ export function BubbleChart(props: BubbleChartProps) {
         </text>
         <g ref={yAxisEl} transform={`translate(${margin.left}, 0)`} />
       </g>
-      <g>
+      <g className="plot">
         {bubbles?.map(({ country, title, ...bubble }) => (
-          <circle {...bubble} key={country}>
+          <circle className="bubble" {...bubble} key={country}>
             <title>{title}</title>
           </circle>
         ))}

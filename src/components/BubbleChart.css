@@ -1,3 +1,12 @@
 .BubbleChart {
   width: 80%;
 }
+
+.bubble {
+  fill: #278a8c70;
+}
+
+.bubble:hover {
+  stroke: black;
+  stroke-width: 2;
+}
