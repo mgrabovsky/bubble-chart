@@ -1,10 +1,11 @@
 import * as d3 from 'd3';
 import { useEffect, useMemo, useRef } from 'react';
 
-import './BubbleChart.css';
+import './BubbleChart.scss';
 import { DatasetRow } from '../dataset';
 
 interface BubbleSpec {
+  continent: string;
   country: string;
   cx: number;
   cy: number;
@@ -37,6 +38,8 @@ export interface BubbleChartProps {
 
 export function BubbleChart(props: BubbleChartProps) {
   const { data, height, margin, width } = props;
+  const innerHeight = height - margin.top - margin.bottom;
+  const innerWidth = width - margin.left - margin.right;
   const xAxisEl = useRef<SVGGElement>(null);
   const yAxisEl = useRef<SVGGElement>(null);
 
@@ -64,6 +67,7 @@ export function BubbleChart(props: BubbleChartProps) {
       const r = radiusScale(d.population);
       const title = makeLabel(d);
       return {
+        continent: d.continent,
         country: d.code,
         cx,
         cy,
@@ -83,13 +87,18 @@ export function BubbleChart(props: BubbleChartProps) {
 
   return (
     <svg className="BubbleChart" viewBox={`0 0 ${width} ${height}`}>
-      <rect
-        className="bg"
-        height={height - margin.top - margin.bottom}
-        width={width - margin.left - margin.right}
-        x={margin.left}
-        y={margin.top}
-      />
+      <g className="grid">
+        <g className="x">
+          {xScale.ticks().map((i) => (
+            <line transform={`translate(${xScale(i)}, ${margin.top})`} y2={innerHeight} />
+          ))}
+        </g>
+        <g className="y">
+          {yScale.ticks().map((i) => (
+            <line transform={`translate(${margin.left}, ${yScale(i)})`} x2={innerWidth} />
+          ))}
+        </g>
+      </g>
       <g className="axes">
         <text
           className="label x"
@@ -104,8 +113,8 @@ export function BubbleChart(props: BubbleChartProps) {
         <g ref={yAxisEl} transform={`translate(${margin.left}, 0)`} />
       </g>
       <g className="plot">
-        {bubbles?.map(({ country, title, ...bubble }) => (
-          <circle className="bubble" {...bubble} key={country}>
+        {bubbles?.map(({ continent, country, title, ...bubble }) => (
+          <circle className="bubble" data-continent={continent} {...bubble} key={country}>
             <title>{title}</title>
           </circle>
         ))}

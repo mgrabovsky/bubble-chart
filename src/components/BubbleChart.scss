@@ -1,0 +1,40 @@
+.BubbleChart {
+  width: 80%;
+
+  .axes .label {
+    fill: currentColor;
+    font-size: 0.85rem;
+    text-anchor: end;
+  }
+
+  .axes .tick {
+    font-size: 0.7rem;
+  }
+
+  .grid line {
+    stroke: #e0e0e0;
+    stroke-width: 1;
+  }
+
+  .bubble {
+    &[data-continent='Africa'] {
+      fill: #452a6cc0;
+    }
+    &[data-continent='Asia'] {
+      fill: #843523c0;
+    }
+    &[data-continent='Europe'] {
+      fill: #274c86c0;
+    }
+    &[data-continent='North America'],
+    &[data-continent='Oceania'],
+    &[data-continent='South America'] {
+      fill: #c6b76cc0;
+    }
+
+    &:hover {
+      stroke: black;
+      stroke-width: 2;
+    }
+  }
+}
