@@ -1,0 +1,7 @@
+.YearSelector > * {
+  margin-left: .5em;
+}
+
+.YearSelector > *:first-child {
+  margin-left: 0;
+}
