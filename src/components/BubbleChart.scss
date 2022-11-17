@@ -1,14 +1,37 @@
 .BubbleChart {
-  width: 80%;
+  width: 100%;
 
-  .axes .label {
-    fill: currentColor;
-    font-size: 0.85rem;
-    text-anchor: end;
-  }
+  .axes {
+    .annotation {
+      text {
+        fill: grey;
+        font-size: 1em;
+        text-anchor: end;
+      }
 
-  .axes .tick {
-    font-size: 0.7rem;
+      line {
+        marker-end: url(#arrow);
+        stroke: grey;
+      }
+
+      rect {
+        fill: var(--bg-color);
+      }
+    }
+
+    .title {
+      fill: currentColor;
+      font-size: 1em;
+      text-anchor: end;
+
+      tspan {
+        font-weight: bold;
+      }
+    }
+
+    .tick {
+      font-size: 0.7rem;
+    }
   }
 
   .grid line {
@@ -36,5 +59,12 @@
       stroke: black;
       stroke-width: 2;
     }
+  }
+}
+
+@media (min-width: 40rem) {
+  .BubbleChart {
+    width: 80%;
+    font-size: 0.75rem;
   }
 }

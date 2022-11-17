@@ -1,7 +1,16 @@
 #root {
   width: 90%;
-  max-width: 60em;
-  min-width: 40em;
+  max-width: 60rem;
   margin: 0 auto;
   text-align: center;
+}
+
+.intro {
+  text-align: left;
+}
+
+@media (min-width: 40rem) {
+  .intro {
+    column-count: 2;
+  }
 }

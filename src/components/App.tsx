@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import './App.css';
+import datasetUrl from '../data/dataset.json?url';
 import { BubbleChart } from './BubbleChart';
 import { Continent, Dataset, fetchDataset } from '../dataset';
 import { ContinentSelector } from './ContinentSelector';
@@ -8,7 +9,7 @@ import { YearSelector } from './YearSelector';
 
 const chartWidth = 600;
 const chartHeight = 400;
-const chartMargins = { top: 20, right: 40, bottom: 50, left: 50 };
+const chartMargins = { top: 20, right: 40, bottom: 45, left: 50 };
 const defaultYear = 2000;
 
 interface FilterCriteria {
@@ -16,6 +17,10 @@ interface FilterCriteria {
   year: number;
 }
 
+/**
+ * Filter the dataset for entries matching the given criteria.
+ * Returns a new dataset.
+ */
 function filterDataset(dataset: Dataset, criteria: FilterCriteria) {
   const { continent, year } = criteria;
   return (
@@ -27,6 +32,9 @@ function filterDataset(dataset: Dataset, criteria: FilterCriteria) {
   );
 }
 
+/**
+ * Root component of the bubble chart application.
+ */
 export function App() {
   const [dataset, setDataset] = useState<Dataset>();
   const isLoading = !dataset;
@@ -37,9 +45,10 @@ export function App() {
 
   // Fetch data on first render.
   useEffect(() => {
-    fetchDataset().then(setDataset);
+    fetchDataset(datasetUrl).then(setDataset);
   }, []);
 
+  // Display only data matching the selected criteria.
   const filteredData = useMemo<Dataset | undefined>(() => {
     if (!dataset || !dataset.length) return;
     return filterDataset(dataset, { continent, year });
@@ -48,6 +57,25 @@ export function App() {
   return (
     <div className="App">
       <h1>An Etude on Human Progress</h1>
+      <div className="intro">
+        <p>
+          The following chart aims to illustrate the progress of humanity towards richer
+          and healthier societies.
+        </p>
+        <p>
+          Each circle corresponds to a country of the world in the year {year}. The area
+          of a circle is proportional to the country’s population.
+        </p>
+        <p>
+          Circles are coloured according to the country’s continent.{' '}
+          {(continent && 'Only countries') || 'Countries'} from{' '}
+          <ContinentSelector onChange={setContinent} value={continent} /> are shown.
+        </p>
+        <p>
+          Hover over a circle to view detailed numbers for each country (per-capita GDP,
+          population and life expectancy).
+        </p>
+      </div>
       {isLoading && <p>Loading data…</p>}
       {filteredData && (
         <>
@@ -57,12 +85,15 @@ export function App() {
             onChange={setYear}
             value={year}
           />
-          <ContinentSelector onChange={setContinent} value={continent} />
           <BubbleChart
             data={filteredData}
             height={chartHeight}
             margin={chartMargins}
             width={chartWidth}
+            // Domains were picked to contain all data comfortably.
+            sizeDomain={[100_000, 1.5e9]}
+            xDomain={[200, 200_000]}
+            yDomain={[15, 90]}
           />
         </>
       )}

@@ -7,10 +7,13 @@ export interface YearSelectorProps {
   value: number;
 }
 
+/**
+ * Slider for choosing a year within a fixed range.
+ */
 export function YearSelector(props: YearSelectorProps) {
   return (
     <div className="YearSelector">
-      <label htmlFor="year-selector">Selected year:</label>
+      <label htmlFor="year-selector">Select year:</label>
       <input
         id="year-selector"
         max={props.max}

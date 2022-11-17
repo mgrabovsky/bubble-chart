@@ -1,5 +1,3 @@
-import datasetUrl from './data/dataset.json?url';
-
 export const CONTINENTS = [
   'Africa',
   'Asia',
@@ -23,6 +21,6 @@ export interface DatasetRow {
 
 export type Dataset = DatasetRow[];
 
-export async function fetchDataset(): Promise<Dataset> {
-  return fetch(datasetUrl).then((response) => response.json());
+export async function fetchDataset(url: string): Promise<Dataset> {
+  return fetch(url).then((response) => response.json());
 }

@@ -6,28 +6,29 @@ export interface ContinentSelectorProps {
   value?: Continent;
 }
 
+/**
+ * Dropdown for choosing a continent from a fixed list.
+ */
 export function ContinentSelector(props: ContinentSelectorProps) {
-  const options = ['All'].concat(CONTINENTS);
+  const options = ['all continents'].concat(CONTINENTS);
 
   const onChangeInner = (newValue: string) => {
-    if (newValue === 'All') props.onChange(undefined);
+    if (newValue === 'all continents') props.onChange(undefined);
     else props.onChange(newValue as Continent);
   };
 
   return (
-    <div className="ContinentSelector">
-      <label htmlFor="continent-selector">Selected continent:</label>
-      <select
-        id="continent-selector"
-        onChange={({ target }) => onChangeInner(target.value)}
-        value={props.value}
-      >
-        {options.map((value) => (
-          <option key={value} value={value}>
-            {value}
-          </option>
-        ))}
-      </select>
-    </div>
+    <select
+      className="ContinentSelector"
+      id="continent-selector"
+      onChange={({ target }) => onChangeInner(target.value)}
+      value={props.value}
+    >
+      {options.map((value) => (
+        <option key={value} value={value}>
+          {value}
+        </option>
+      ))}
+    </select>
   );
 }
