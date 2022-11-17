@@ -1,0 +1,7 @@
+.ContinentSelector > * {
+  margin-left: .5em;
+}
+
+.ContinentSelector > *:first-child {
+  margin-left: 0;
+}
