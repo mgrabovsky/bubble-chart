@@ -20,7 +20,13 @@ export function App() {
 
   const transformedData = useMemo<Dataset | undefined>(() => {
     if (!dataset) return;
-    return dataset.filter((d) => d.year === yearSelected);
+    return (
+      dataset
+        .filter((d) => d.year === yearSelected)
+        // Sort by descending population so that the biggest countries are rendered
+        // first and that the smaller ones are hoverable.
+        .sort((d1, d2) => d2.population - d1.population)
+    );
   }, [dataset, yearSelected]);
 
   return (
