@@ -2,6 +2,7 @@
   --bg-color: #f7f5f3;
   --text-color: #333333;
 
+  color-scheme: light dark;
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 1em;
   line-height: 1.5em;
@@ -22,4 +23,11 @@ body {
 
 h1 {
   line-height: 1.1em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #333;
+    --text-color: #f7f5f3;
+  }
 }

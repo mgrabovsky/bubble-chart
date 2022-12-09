@@ -68,3 +68,27 @@
     font-size: 0.75rem;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .BubbleChart .grid line {
+    stroke: #424242;
+  }
+
+  .BubbleChart .bubble[data-continent="Africa"] {
+    fill: #695388bf;
+  }
+
+  .BubbleChart .bubble[data-continent="Asia"] {
+    fill: #995343bf;
+  }
+
+  .BubbleChart .bubble[data-continent="Europe"] {
+    fill: #4977bfbf;
+  }
+
+  .BubbleChart .bubble[data-continent="North America"],
+  .BubbleChart .bubble[data-continent="Oceania"],
+  .BubbleChart .bubble[data-continent="South America"] {
+    fill: #b7a966bf;
+  }
+}
