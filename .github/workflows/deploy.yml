@@ -7,39 +7,38 @@ permissions:
   contents: read
   pages: write
   id-token: write
-# Allow one concurrent deployment.
+# Allow only one concurrent deployment. Cancel previous when
+# a new change comes in.
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 jobs:
-  # Build the application and upload the output as an artifact.
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
+      - name: Check out source code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: yarn
 
-      - name: Setup Pages
+      - name: Set up GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install
 
-      - name: Build with Next.js
+      - name: Build project
         run: yarn build
 
-      - name: Upload artifact
+      - name: Upload build output as artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
 
-  # Deployment job.
   deploy:
     environment:
       name: github-pages
