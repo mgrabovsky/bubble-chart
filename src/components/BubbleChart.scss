@@ -38,28 +38,6 @@
     stroke: #e0e0e0;
     stroke-width: 1;
   }
-
-  .bubble {
-    &[data-continent='Africa'] {
-      fill: #452a6cc0;
-    }
-    &[data-continent='Asia'] {
-      fill: #843523c0;
-    }
-    &[data-continent='Europe'] {
-      fill: #274c86c0;
-    }
-    &[data-continent='North America'],
-    &[data-continent='Oceania'],
-    &[data-continent='South America'] {
-      fill: #c6b76cc0;
-    }
-
-    &:hover {
-      stroke: black;
-      stroke-width: 2;
-    }
-  }
 }
 
 @media (min-width: 40rem) {
@@ -72,23 +50,5 @@
 @media (prefers-color-scheme: dark) {
   .BubbleChart .grid line {
     stroke: #424242;
-  }
-
-  .BubbleChart .bubble[data-continent="Africa"] {
-    fill: #695388bf;
-  }
-
-  .BubbleChart .bubble[data-continent="Asia"] {
-    fill: #995343bf;
-  }
-
-  .BubbleChart .bubble[data-continent="Europe"] {
-    fill: #4977bfbf;
-  }
-
-  .BubbleChart .bubble[data-continent="North America"],
-  .BubbleChart .bubble[data-continent="Oceania"],
-  .BubbleChart .bubble[data-continent="South America"] {
-    fill: #b7a966bf;
   }
 }
