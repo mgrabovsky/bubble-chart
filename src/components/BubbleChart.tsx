@@ -1,18 +1,9 @@
 import * as d3 from 'd3';
-import { useEffect, useMemo, useRef } from 'react';
+import { JSX, useEffect, useMemo, useRef } from 'react';
 
 import './BubbleChart.scss';
+import { Bubble } from './Bubble';
 import { DatasetRow } from '../dataset';
-
-interface BubbleSpec {
-  continent: string;
-  country: string;
-  cx: number;
-  cy: number;
-  fill?: string;
-  r: number;
-  title: string;
-}
 
 const expectancyFormat = d3.format('.1f');
 const gdpFormat = d3.format('$,d');
@@ -107,22 +98,19 @@ export function BubbleChart(props: BubbleChartProps) {
   }, [height, margin, yDomain]);
   const radiusScale = d3.scaleSqrt().range([2, 40]).domain(props.sizeDomain);
 
-  const bubbles = useMemo<BubbleSpec[] | undefined>(() => {
+  const bubbles = useMemo<JSX.Element[] | undefined>(() => {
     if (!data.length) return;
-    return data.map((d) => {
-      const cx = xScale(d.gdp);
-      const cy = yScale(d.expectancy);
-      const r = radiusScale(d.population);
-      const title = makeLabel(d);
-      return {
-        continent: d.continent,
-        country: d.code,
-        cx,
-        cy,
-        r,
-        title,
-      };
-    });
+    return data.map((d) => (
+      <Bubble
+        continent={d.continent}
+        country={d.code}
+        key={d.country}
+        radius={radiusScale(d.population)}
+        title={makeLabel(d)}
+        x={xScale(d.gdp)}
+        y={yScale(d.expectancy)}
+      />
+    ));
   }, [data, xScale, yScale]);
 
   useEffect(() => {
@@ -143,9 +131,8 @@ export function BubbleChart(props: BubbleChartProps) {
       </text>
       <g
         className="annotation x"
-        transform={`translate(${width - margin.right - 20}, ${
-          innerHeight + margin.top - 20
-        })`}
+        transform={`translate(${width - margin.right - 20}, ${innerHeight + margin.top - 20
+          })`}
       >
         <rect height="25" width="200" x="-190" y="-15" />
         <text>Countries grow economically richer</text>
@@ -182,11 +169,7 @@ export function BubbleChart(props: BubbleChartProps) {
         {yAxisFragment}
       </g>
       <g className="plot">
-        {bubbles?.map(({ continent, country, title, ...bubble }) => (
-          <circle className="bubble" data-continent={continent} {...bubble} key={country}>
-            <title>{title}</title>
-          </circle>
-        ))}
+        {bubbles}
       </g>
     </svg>
   );
