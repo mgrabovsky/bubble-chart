@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import * as d3 from 'd3';
-import { JSX, useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 
 import './BubbleChart.scss';
 import { Bubble } from './Bubble';
