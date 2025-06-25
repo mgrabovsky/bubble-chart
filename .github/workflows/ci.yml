@@ -1,6 +1,8 @@
-name: Deploy to GitHub Pages
+name: Build and deploy to GitHub Pages
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 permissions:
@@ -36,10 +38,12 @@ jobs:
 
       - name: Upload build output as artifact
         uses: actions/upload-pages-artifact@v3
+        if: github.ref_name == 'main'
         with:
           path: dist/
 
   deploy:
+    if: github.ref_name == 'main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
