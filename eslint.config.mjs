@@ -1,22 +1,25 @@
 import globals from 'globals';
 
-import js from '@eslint/js';
-import tsParser from '@typescript-eslint/parser';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import eslint from '@eslint/js';
 import react from 'eslint-plugin-react';
+import tsParser from '@typescript-eslint/parser';
+import tseslint from '@typescript-eslint/eslint-plugin';
 
 export default [
   {
-    ...js.configs.recommended,
-    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['node_modules/*', 'dist/*', 'eslint.config.mjs'],
+  },
+  {
+    ...eslint.configs.recommended,
+    files: ['**/*.{ts,tsx}'],
     rules: {
       'no-unused-vars': 'off',
     },
   },
   {
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx}'],
     plugins: {
-      '@typescript-eslint': typescriptEslint,
+      '@typescript-eslint': tseslint,
       react,
     },
     languageOptions: {
