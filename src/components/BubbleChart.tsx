@@ -1,8 +1,10 @@
+import { clsx } from 'clsx';
 import * as d3 from 'd3';
-import { JSX, useEffect, useMemo, useRef } from 'react';
+import { JSX, useEffect, useMemo, useState, useRef } from 'react';
 
 import './BubbleChart.scss';
 import { Bubble } from './Bubble';
+import { Trajectory } from './Trajectory';
 import { Dataset, DatasetRow, FilterCriteria, filterDataset } from '../dataset';
 
 const expectancyFormat = d3.format('.1f');
@@ -80,6 +82,7 @@ export function BubbleChart(props: BubbleChartProps) {
   const innerHeight = height - margin.top - margin.bottom;
   const xAxisEl = useRef<SVGGElement>(null);
   const yAxisEl = useRef<SVGGElement>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const [xScale, xAxis] = useMemo(() => {
     const scale = d3
@@ -105,23 +108,33 @@ export function BubbleChart(props: BubbleChartProps) {
     return filterDataset(data, criteria);
   }, [criteria, data]);
 
-  const bubbles = useMemo<JSX.Element[] | undefined>(() => {
-    if (!bubblesData) return;
-    return bubblesData.map((d) => (
+  const onBubbleClick = (code: string) =>
+    setSelectedCountry(selectedCountry === code ? null : code);
+
+  const bubbles =
+    bubblesData &&
+    bubblesData.map((d) => (
       <Bubble
         continent={d.continent}
         country={d.code}
-        key={d.country}
+        key={d.code}
+        onClick={onBubbleClick}
         radius={radiusScale(d.population)}
+        selected={selectedCountry === d.code}
         title={makeLabel(d)}
         x={xScale(d.gdp)}
         y={yScale(d.expectancy)}
       />
     ));
-  }, [bubblesData, xScale, yScale]);
 
-  // TODO: Construct the trajectory.
-  const trajectory = null;
+  const trajectory =
+    selectedCountry && data ? (
+      <Trajectory
+        data={data
+          .filter((d) => d.code === selectedCountry)
+          .map((d) => ({ x: xScale(d.gdp), y: yScale(d.expectancy) }))}
+      />
+    ) : null;
 
   useEffect(() => {
     if (xAxisEl.current) d3.select(xAxisEl.current).call(xAxis);
@@ -179,9 +192,9 @@ export function BubbleChart(props: BubbleChartProps) {
         {xAxisFragment}
         {yAxisFragment}
       </g>
-      <g className="plot">
-        {bubbles}
+      <g className={clsx('plot', selectedCountry && 'selecting')}>
         {trajectory}
+        {bubbles}
       </g>
     </svg>
   );

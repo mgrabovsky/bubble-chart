@@ -20,6 +20,10 @@
   }
 }
 
+.selecting .bubble:not(.selected) {
+  opacity: .2;
+}
+
 @media (prefers-color-scheme: dark) {
   .bubble[data-continent="Africa"] {
     fill: #695388bf;

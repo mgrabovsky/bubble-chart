@@ -1,0 +1,10 @@
+.trajectory {
+  fill: none;
+  stroke: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  .trajectory {
+    stroke: white;
+  }
+}
