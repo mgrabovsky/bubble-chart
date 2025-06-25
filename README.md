@@ -1,4 +1,4 @@
-[![Deployed on GitHub Pages](https://github.com/mgrabovsky/bubble-chart/actions/workflows/deploy.yml/badge.svg)](https://github.com/mgrabovsky/bubble-chart/actions/workflows/deploy.yml)
+[![Deployed on GitHub Pages](https://github.com/mgrabovsky/bubble-chart/actions/workflows/ci.yml/badge.svg)](https://github.com/mgrabovsky/bubble-chart/actions/workflows/ci.yml)
 
 # Bubble Chart
 
