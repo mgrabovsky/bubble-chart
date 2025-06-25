@@ -3,7 +3,7 @@ import { JSX, useEffect, useMemo, useRef } from 'react';
 
 import './BubbleChart.scss';
 import { Bubble } from './Bubble';
-import { DatasetRow } from '../dataset';
+import { Dataset, DatasetRow, FilterCriteria, filterDataset } from '../dataset';
 
 const expectancyFormat = d3.format('.1f');
 const gdpFormat = d3.format('$,d');
@@ -53,6 +53,7 @@ const arrowMarker = (
 );
 
 export interface BubbleChartProps {
+  criteria: FilterCriteria;
   /** The dataset to render. */
   data: DatasetRow[];
   /** Outer height of the SVG element in px. */
@@ -75,7 +76,7 @@ export interface BubbleChartProps {
 }
 
 export function BubbleChart(props: BubbleChartProps) {
-  const { data, height, margin, width, xDomain, yDomain } = props;
+  const { criteria, data, height, margin, width, xDomain, yDomain } = props;
   const innerHeight = height - margin.top - margin.bottom;
   const xAxisEl = useRef<SVGGElement>(null);
   const yAxisEl = useRef<SVGGElement>(null);
@@ -98,9 +99,15 @@ export function BubbleChart(props: BubbleChartProps) {
   }, [height, margin, yDomain]);
   const radiusScale = d3.scaleSqrt().range([2, 40]).domain(props.sizeDomain);
 
+  // Display only data matching the selected criteria.
+  const bubblesData = useMemo<Dataset | undefined>(() => {
+    if (!data || !data.length) return;
+    return filterDataset(data, criteria);
+  }, [criteria, data]);
+
   const bubbles = useMemo<JSX.Element[] | undefined>(() => {
-    if (!data.length) return;
-    return data.map((d) => (
+    if (!bubblesData) return;
+    return bubblesData.map((d) => (
       <Bubble
         continent={d.continent}
         country={d.code}
@@ -111,7 +118,10 @@ export function BubbleChart(props: BubbleChartProps) {
         y={yScale(d.expectancy)}
       />
     ));
-  }, [data, xScale, yScale]);
+  }, [bubblesData, xScale, yScale]);
+
+  // TODO: Construct the trajectory.
+  const trajectory = null;
 
   useEffect(() => {
     if (xAxisEl.current) d3.select(xAxisEl.current).call(xAxis);
@@ -131,8 +141,9 @@ export function BubbleChart(props: BubbleChartProps) {
       </text>
       <g
         className="annotation x"
-        transform={`translate(${width - margin.right - 20}, ${innerHeight + margin.top - 20
-          })`}
+        transform={`translate(${width - margin.right - 20}, ${
+          innerHeight + margin.top - 20
+        })`}
       >
         <rect height="25" width="200" x="-190" y="-15" />
         <text>Countries grow economically richer</text>
@@ -170,6 +181,7 @@ export function BubbleChart(props: BubbleChartProps) {
       </g>
       <g className="plot">
         {bubbles}
+        {trajectory}
       </g>
     </svg>
   );
