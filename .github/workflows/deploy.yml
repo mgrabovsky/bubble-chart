@@ -38,7 +38,7 @@ jobs:
         run: yarn build
 
       - name: Upload build output as artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         if: github.ref_name == 'main'
         with:
           path: dist/
