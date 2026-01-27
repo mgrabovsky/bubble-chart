@@ -13,13 +13,13 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
-    "react": "^19.2.0",
+    "react": "^19.2.4",
     "react-dom": "^19.2.0",
     "sass": "^1.97.3"
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^8.53.1",
     "@typescript-eslint/parser": "^8.54.0",
