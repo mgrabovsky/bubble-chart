@@ -80,8 +80,8 @@ export interface BubbleChartProps {
 export function BubbleChart(props: BubbleChartProps) {
   const { criteria, data, height, margin, width, xDomain, yDomain } = props;
   const innerHeight = height - margin.top - margin.bottom;
-  const xAxisEl = useRef<SVGGElement>(null);
-  const yAxisEl = useRef<SVGGElement>(null);
+  const xAxisRef = useRef<SVGGElement>(null);
+  const yAxisRef = useRef<SVGGElement>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const [xScale, xAxis] = useMemo(() => {
@@ -137,8 +137,8 @@ export function BubbleChart(props: BubbleChartProps) {
     ) : null;
 
   useEffect(() => {
-    if (xAxisEl.current) d3.select(xAxisEl.current).call(xAxis);
-    if (yAxisEl.current) d3.select(yAxisEl.current).call(yAxis);
+    if (xAxisRef.current) d3.select(xAxisRef.current).call(xAxis);
+    if (yAxisRef.current) d3.select(yAxisRef.current).call(yAxis);
   }, [xAxis, yAxis]);
 
   if (!bubbles) return <p>No data available.</p>;
@@ -162,7 +162,7 @@ export function BubbleChart(props: BubbleChartProps) {
         <text>Countries grow economically richer</text>
         <line x1="-190" x2="10" y1="10" y2="10" />
       </g>
-      <g ref={xAxisEl} transform={`translate(0, ${height - margin.bottom})`} />
+      <g ref={xAxisRef} transform={`translate(0, ${height - margin.bottom})`} />
     </>
   );
 
@@ -180,7 +180,7 @@ export function BubbleChart(props: BubbleChartProps) {
         <text>People live longer</text>
         <line x1="-100" x2="10" y1="-18" y2="-18" />
       </g>
-      <g ref={yAxisEl} transform={`translate(${margin.left}, 0)`} />
+      <g ref={yAxisRef} transform={`translate(${margin.left}, 0)`} />
     </>
   );
 
