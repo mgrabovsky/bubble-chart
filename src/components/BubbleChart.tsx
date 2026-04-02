@@ -88,7 +88,7 @@ export function BubbleChart(props: BubbleChartProps) {
     const scale = d3
       .scaleLog()
       .range([margin.left, width - margin.right])
-      .domain(props.xDomain);
+      .domain(xDomain);
     const axis = d3.axisBottom(scale);
     return [scale, axis];
   }, [margin, width, xDomain]);
@@ -96,7 +96,7 @@ export function BubbleChart(props: BubbleChartProps) {
     const scale = d3
       .scaleLinear()
       .range([height - margin.bottom, margin.top])
-      .domain(props.yDomain);
+      .domain(yDomain);
     const axis = d3.axisLeft(scale);
     return [scale, axis];
   }, [height, margin, yDomain]);
