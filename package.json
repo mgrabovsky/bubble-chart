@@ -18,7 +18,7 @@
     "sass": "^1.98.0"
   },
   "devDependencies": {
-    "@eslint-react/eslint-plugin": "^4.2.1",
+    "@eslint-react/eslint-plugin": "^4.2.3",
     "@eslint/js": "^10.0.1",
     "@types/d3": "^7.4.3",
     "@types/react": "^19.2.14",
